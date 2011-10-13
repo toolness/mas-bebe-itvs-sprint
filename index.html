@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<head>
+<title>mas bebes</title>
+<style type="text/css">
+body, video { margin: 0; }
+#content { position: absolute; top 0; left 0; border: 0; margin: 0; width: 100%;}
+#question { display: none; position: absolute; top: 100px; left: 250px; z-index: 99;}
+#background { position: absolute; top 0; left: 0; margin: 0; }
+#vidholder1 { position: absolute; top: %25; left: %25; z-index: 99; }
+#vidholder2 { position: absolute; top: %25; left: %25; z-index: 99; }
+#vidholder3 { position: absolute; top: %25; left: %25; z-index: 99; }
+#vidholder4 { position: absolute; top: %25; left: %25; z-index: 99; }
+
+input { width: 72px; }
+.thumbnails {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.thumbnail {
+  width: 10%;
+  -moz-transition-property: width, opacity;
+  -moz-transition-duration: 0.5s;
+  -webkit-transition-property: width, opacity;
+  -webkit-transition-duration: 0.5s;
+  -o-transition-property: width, opacity;
+  -o-transition-duration: 0.5s;
+  padding: 0px;
+  opacity: 0.5;
+}
+
+.focused, .in-chapter {
+  opacity: 1.0;
+}
+
+.in-chapter {
+  width: 15%;
+}
+</style>
+<script type="text/javascript" src="popcorn-complete.js"></script>
+<script type="text/javascript" src="videopop.js"></script>
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script>
+jQuery.fn.extend({
+  // Connect the currently selected elements to serve as
+  // chapter markers for the given video. Each element is given the
+  // 'focused' class when the mouse hovers over them,
+  // and the 'in-chapter' class when the video is in their respective
+  // chapter. When they are clicked, the video goes to the beginning
+  // of the respective chapter.
+  //
+  // Each selected element is expected to have 'data-start'
+  // and 'data-end' attributes that specify when (in seconds) the 
+  // element's chapter begins and ends.
+  chapterize: function(pop, video) {
+    this.each(function() {
+      var self = $(this);
+      self.hover(function() {
+        self.addClass("focused");      
+      }, function() {
+        self.removeClass("focused");      
+      }).click(function() {
+        $(video)[0].currentTime = self.attr("data-start");
+      });
+      pop.code({
+        start: parseInt(self.attr("data-start")),
+        end: parseInt(self.attr("data-end")),
+        onStart: function() {
+          self.addClass("in-chapter");
+        },
+        onEnd: function() {
+          self.removeClass("in-chapter");
+        }
+      });
+    });
+  }
+});
+</script>
+
+<script type="text/javascript">
+   // ensure the web page (DOM) has loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        $("#background").width($(document).width()); 
+	var pop = Popcorn("#background");
+	$(".thumbnail").chapterize(pop, "#background");
+         // add a footnote at 2 seconds, and remove it at 6 seconds
+	
+// kill me
+
+// pop.exec( 2.5, function() {
+   // 		console.log("pausing!");
+    //		this.pause();
+    	//	$("#question").show();
+	//	$("#question > input").focus();
+//	}).play(); 
+	
+	
+	pop.videopop({
+	target: 'vidholder',
+	start: 4,
+	end: 24,
+	source: "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm",
+	name: "VirginiaSterliziation",	
+	poster: "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/*JPGES/1927_Holmes.jpg"
+	});
+
+});
+
+function checkSubmit(){
+	var year = ($('input').val());
+	if (year.length == 4)	{
+		$("#question").remove();
+		Popcorn("#background").play();
+		}
+}
+
+</script>
+</head>
+<body>
+<div id="content">
+<div id="vidholder"></div>
+<div id="question">Year of your birth: <input type="text" onKeyPress="checkSubmit(event)" name="year" maxlength="4"></div>
+<video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" id="background" controls></div>
+<div class="thumbnails">
+  <img src="timeline_images/1927.jpg" class="thumbnail" data-start="3" data-end="5">
+  <img src="timeline_images/1941.jpg" class="thumbnail" data-start="23" data-end="31">
+  <img src="timeline_images/1945.jpg" class="thumbnail" data-start="32" data-end="40">
+  <img src="timeline_images/1965.jpg" class="thumbnail" data-start="41" data-end="49">
+  <img src="timeline_images/1968.jpg" class="thumbnail" data-start="64" data-end="73">
+  <img src="timeline_images/1973.jpg" class="thumbnail" data-start="74" data-end="92">
+  <img src="timeline_images/1980.jpg" class="thumbnail" data-start="146" data-end="155">
+  <img src="timeline_images/1994.jpg" class="thumbnail" data-start="180" data-end="188">
+  <img src="timeline_images/2011.jpg" class="thumbnail" data-start="193" data-end="206">
+
+</div>
+</body>
+</html>
