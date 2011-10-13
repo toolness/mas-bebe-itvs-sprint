@@ -11,8 +11,8 @@ body, video { margin: 0; }
 #vidholder2 { position: absolute; top: %25; left: %25; z-index: 99; }
 #vidholder3 { position: absolute; top: %25; left: %25; z-index: 99; }
 #vidholder4 { position: absolute; top: %25; left: %25; z-index: 99; }
-#time { position: absolute; top: 25px; right: 50px; z-index: 99; color: white; font-size: 48pt; opacity: 0.75; }
-.timefont { font-family: "Neucha", Arial, serif; font-weight: 400; }
+#time { position: absolute; top: 25px; right: 50px; z-index: 99; color: white; font-size: 36pt; opacity: 0.5; }
+.timefont { font-family: "Neucha", Arial, serif; font-weight: 700; }
 
 input { width: 72px; }
 .thumbnails {
@@ -96,7 +96,26 @@ jQuery.fn.extend({
   	  text: $(this).attr("data-year")
     });
   });
-	
+  
+	[[3, 49],
+	 [65, 82],
+	 [147, 161],
+	 [193, 206]].forEach(function(op) {
+	   var start = op[0];
+	   var end = op[1];
+	   pop.code({
+	     start: op[0],
+	     end: op[1],
+	     onStart: function() {
+	       console.log("SHOW");
+	       $(".thumbnails").show();
+       },
+       onEnd: function() {
+	       console.log("HIDE");
+         $(".thumbnails").hide();
+       }
+     });
+   });
          // add a footnote at 2 seconds, and remove it at 6 seconds
 	
 // kill me
@@ -140,7 +159,7 @@ function checkSubmit(){
   <!-- For Development Only; quick reload speeds! -->
   <!-- <video src="http://videos.mozilla.org/serv/webmademovies/wtfpopcorn.ogv" id="background" controls> -->
   </div>
-<div class="thumbnails">
+<div class="thumbnails" style="display: none;">
   <img src="timeline_images/1927.jpg" class="thumbnail" data-start="3" data-end="5" data-year="1927">
   <img src="timeline_images/1941.jpg" class="thumbnail" data-start="23" data-end="31" data-year="1941">
   <img src="timeline_images/1945.jpg" class="thumbnail" data-start="32" data-end="40" data-year="1945">
