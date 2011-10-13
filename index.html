@@ -107,12 +107,10 @@ jQuery.fn.extend({
 	     start: op[0],
 	     end: op[1],
 	     onStart: function() {
-	       console.log("SHOW");
-	       $(".thumbnails").show();
+	       $(".thumbnails").fadeIn("slow");
        },
        onEnd: function() {
-	       console.log("HIDE");
-         $(".thumbnails").hide();
+         $(".thumbnails").fadeOut("slow");
        }
      });
    });
