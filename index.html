@@ -4,6 +4,7 @@
 <link href='http://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
 <style type="text/css">
 body, video { margin: 0; }
+html, body { overflow: hidden; }
 #content { position: absolute; top 0; left 0; border: 0; margin: 0; width: 100%;}
 #question { display: none; position: absolute; top: 100px; left: 250px; z-index: 99;}
 #background { position: absolute; top 0; left: 0; margin: 0; }
@@ -13,7 +14,8 @@ body, video { margin: 0; }
 #vidholder4 { position: absolute; top: %25; left: %25; z-index: 99; }
 #ribbon {
   position: absolute;
-  top: 0px;
+  top: 10px;
+  padding-right: 10px;
   font-size: 48pt;
   color: white;
   z-index: 900;
@@ -103,18 +105,18 @@ jQuery.fn.extend({
   	  end: parseInt($(this).attr("data-end")),
   	  onStart: function() {
   	    $("#ribbon").text(year.toString()).css({
-  	      left: "-" + ($("#ribbon").width()) + "px",
-  	      "-moz-transition": "left 0.5s"
+  	      right: "-" + ($("#ribbon").outerWidth()) + "px",
+  	      "-moz-transition": "right 0.5s"
   	    });
   	    setTimeout(function() {
           $("#ribbon").css({
-    	      left: "0px"
+    	      right: "0px"
     	    });
     		}, 0);
 	    },
 	    onEnd: function() {
   	    $("#ribbon").text(year.toString()).css({
-  	      left: "-" + ($("#ribbon").width()) + "px",
+  	      right: "-" + ($("#ribbon").outerWidth()) + "px",
 	      });
       }
     });
