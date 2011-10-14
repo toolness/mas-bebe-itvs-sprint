@@ -4,14 +4,9 @@
 <link href='http://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
 <style type="text/css">
 body, video { margin: 0; }
-html, body { overflow: hidden; }
 #content { position: absolute; top 0; left 0; border: 0; margin: 0; width: 100%;}
 #question { display: none; position: absolute; top: 100px; left: 250px; z-index: 99;}
 #background { position: absolute; top 0; left: 0; margin: 0; }
-#vidholder, #vidholder1 { position: absolute; top: %25; left: %25; z-index: 99; }
-#vidholder2 { position: absolute; top: %25; left: %25; z-index: 99; }
-#vidholder3 { position: absolute; top: %25; left: %25; z-index: 99; }
-#vidholder4 { position: absolute; top: %25; left: %25; z-index: 99; }
 #ribbon {
   position: absolute;
   top: 10px;
@@ -23,6 +18,16 @@ html, body { overflow: hidden; }
   font-weight: 700;
 }
 
+#vidholder {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10000;
+  color: white;
+  background: transparent;
+  font-size: 48pt;  
+}
+
 #crazy-ribbon-1 {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   position: absolute;
@@ -32,6 +37,7 @@ html, body { overflow: hidden; }
   color: white;
   z-index: 900;
   background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 #crazy-ribbon-1 a {
@@ -162,7 +168,7 @@ jQuery.fn.extend({
   [
     [2, 6, '<span class="video">Watch Buck vs. Bell</span>', 'resources/darwin.webm'],
     [24, 32, '<a href="http://www.eugenicsarchive.org/eugenics/">Visit the Eugenics Archive</a>'],
-    [25, 33, '<a href="http://www.5min.com/Video/Mexican-American-Women-in-the-Home-Front-in-World-War-II-268423823">Watch a video about Mexican-American women</a>'],
+    [25, 33, '<a target="_blank" href="http://www.5min.com/Video/Mexican-American-Women-in-the-Home-Front-in-World-War-II-268423823">Watch a video about Mexican-American women</a>'],
     [33, 41, '<span class="video">Watch a video about deportation</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1945_OperationWetback.webm'],
     [42, 50, '<span class="video">Watch a video depicting forced sterilization</a>', 'resources/operacion.webm'],
     [65, 74, '<span class="video">Watch family planning news report</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1968_NixonBC_Appalachia.webm'],
@@ -185,24 +191,28 @@ jQuery.fn.extend({
 		widget.show();
 		$(".video").click(function(){
 			console.log("click!" + ops[3]);
-			console.log("starting pop" + options.start + " src is " + options.source );
-	        	$("#" + options.target).hide();
-        		$("<video/>", { src: options.source, id: options.name,  width: "240", poster: options.poster, controls: "true"}).appendTo("#" + options.target);
-        		$("#" + options.target).fadeIn(3000);
-        		vpop = Popcorn("#"+ options.name);
-        		vpop.listen("play", function() {
-            			Popcorn("#background").pause();
-        		});
-        		vpop.listen("pause", function() {
-            			Popcorn("#background").play();
-        		});
-        		vpop.listen("ended", function() {
-            			Popcorn("#background").play();
-        		});
-
+			console.log("starting pop" + start + " src is " + url );
+      var video = $("<video/>", { src: url, autoplay: "true", width: "240", controls: "true"});
+      $("#vidholder").append(video);
+      console.log(video[0]);
+      video.fadeIn(3000);
+  		vpop = Popcorn(video[0]);
+  		vpop.listen("play", function() {
+      			Popcorn("#background").pause();
+  		});
+  		vpop.listen("pause", function() {
+      			Popcorn("#background").play();
+  		});
+  		vpop.listen("ended", function() {
+      			Popcorn("#background").play();
+      			video.remove();
+  		});
 		});
 	  },
-  	  onEnd: widget.hide      
+  	onEnd: function() {
+  	  $(".video").unbind();
+  	  widget.hide();
+  	}
     });
   });
   
@@ -259,11 +269,11 @@ function checkSubmit(){
 <body>
 <div id="ribbon"></div>
 <div id="crazy-ribbon-1"></div>
-<div id="content">
 <div id="vidholder"></div>
+<div id="content">
 <div id="question">Year of your birth: <input type="text" onKeyPress="checkSubmit(event)" name="year" maxlength="4"></div>
 <!-- For Production Only! The Video Is Freakin' Huge! -->
-<<video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" id="background" controls>
+<<video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay id="background" controls>
   <!-- For Development Only; quick reload speeds! -->
   <!-- <video src="http://videos.mozilla.org/serv/webmademovies/wtfpopcorn.ogv" id="background" controls> -->
   </div>
