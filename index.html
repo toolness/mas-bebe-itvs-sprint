@@ -93,6 +93,33 @@ jQuery.fn.extend({
 </script>
 
 <script type="text/javascript">
+jQuery.fn.extend({
+  ribbonize: function(html) {
+    var self = this;
+    var widget = {
+      show: function() {
+        self.html(html).css({
+          right: "-" + (self.outerWidth()) + "px",
+          "-moz-transition": "right 0.5s",
+          "-webkit-transition": "right 0.5s"
+        });
+        setTimeout(function() {
+          self.css({
+    	      right: "0px"
+    	    });
+    		}, 0);
+    	},
+    	hide: function() {
+        self.html(html).css({
+          right: "-" + (self.outerWidth()) + "px",
+          "-moz-transition": "right 0.5s"
+        });
+  	  }
+  	};
+  	return widget;
+  }
+});
+
    // ensure the web page (DOM) has loaded
       document.addEventListener("DOMContentLoaded", function () {
         $("#background").width($(document).width()); 
@@ -100,25 +127,12 @@ jQuery.fn.extend({
 	$(".thumbnail").chapterize(pop, "#background").each(function() {
 	  var self = $(this);
 	  var year = self.attr("data-year");
+	  var widget = $("#ribbon").ribbonize(year.toString());
   	pop.code({
   	  start: parseInt($(this).attr("data-start")),
   	  end: parseInt($(this).attr("data-end")),
-  	  onStart: function() {
-  	    $("#ribbon").text(year.toString()).css({
-  	      right: "-" + ($("#ribbon").outerWidth()) + "px",
-  	      "-moz-transition": "right 0.5s"
-  	    });
-  	    setTimeout(function() {
-          $("#ribbon").css({
-    	      right: "0px"
-    	    });
-    		}, 0);
-	    },
-	    onEnd: function() {
-  	    $("#ribbon").text(year.toString()).css({
-  	      right: "-" + ($("#ribbon").outerWidth()) + "px",
-	      });
-      }
+  	  onStart: widget.show,
+  	  onEnd: widget.hide
     });
   });
   
