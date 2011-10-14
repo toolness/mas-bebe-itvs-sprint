@@ -23,6 +23,26 @@ html, body { overflow: hidden; }
   font-weight: 700;
 }
 
+#crazy-ribbon-1 {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  position: absolute;
+  top: 150px;
+  padding: 10px;
+  font-size: 9pt;
+  color: white;
+  z-index: 900;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#crazy-ribbon-1 a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+#crazy-ribbon-1 a:hover {
+  text-decoration: underline;
+}
+
 input { width: 72px; }
 .thumbnails {
   position: absolute;
@@ -125,14 +145,26 @@ jQuery.fn.extend({
         $("#background").width($(document).width()); 
 	var pop = Popcorn("#background");
 	$(".thumbnail").chapterize(pop, "#background").each(function() {
-	  var self = $(this);
-	  var year = self.attr("data-year");
+	  var year = $(this).attr("data-year");
 	  var widget = $("#ribbon").ribbonize(year.toString());
   	pop.code({
   	  start: parseInt($(this).attr("data-start")),
   	  end: parseInt($(this).attr("data-end")),
   	  onStart: widget.show,
   	  onEnd: widget.hide
+    });
+  });
+  
+  [[1, 5, '<a href="http://foo.com">Watch Buck vs. Bill</a>']].forEach(function(ops) {
+    var start = ops[0];
+    var end = ops[1];
+    var text = ops[2];
+    var widget = $("#crazy-ribbon-1").ribbonize(text);
+    pop.code({
+      start: start,
+      end: end,
+  	  onStart: widget.show,
+  	  onEnd: widget.hide      
     });
   });
   
@@ -188,6 +220,7 @@ function checkSubmit(){
 </head>
 <body>
 <div id="ribbon"></div>
+<div id="crazy-ribbon-1"></div>
 <div id="content">
 <div id="vidholder"></div>
 <div id="question">Year of your birth: <input type="text" onKeyPress="checkSubmit(event)" name="year" maxlength="4"></div>
