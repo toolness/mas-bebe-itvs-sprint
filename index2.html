@@ -61,7 +61,7 @@ div.thumbnails img:hover {
 <script src="cornish.js"></script>
 <script>
 $(window).ready(function() {
-  $(".thumbnails img").click(function() {
+  $(".thumbnails img").click(function goToChapterStart() {
     var chapterStart = Cornish.getActiveDurations(this)[0].start;
     $(".primary-sync-source")[0].currentTime = chapterStart;
   });
