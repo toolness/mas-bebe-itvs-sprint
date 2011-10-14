@@ -155,6 +155,10 @@ jQuery.fn.extend({
     });
   });
   
+  // This is the code to bust a ribbon!
+  // First number of each array is start time in secs
+  // Second number is end time
+  // Third string is HTML content of ribbon.
   [[1, 5, '<a href="http://foo.com">Watch Buck vs. Bill</a>']].forEach(function(ops) {
     var start = ops[0];
     var end = ops[1];
