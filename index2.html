@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<head>
+<title>Mas Bebes</title>
+<style>
+html, body {
+  padding: 0px;
+  width: 800px;
+  margin: 0px auto;
+  background: black;
+}
+
+.primary-sync-source {
+  width: 800px;
+}
+
+div.thumbnails {
+  position: absolute;
+  bottom: 50px;
+  left: 0px;
+  right: 0px;
+}
+
+div.thumbnails img {
+  width: 10%;
+  -moz-transition-property: width, opacity;
+  -moz-transition-duration: 0.5s;
+  -webkit-transition-property: width, opacity;
+  -webkit-transition-duration: 0.5s;
+  -o-transition-property: width, opacity;
+  -o-transition-duration: 0.5s;
+  padding: 0px;
+  opacity: 0.5;
+}
+
+div.thumbnails div {
+  position: relative;
+  display: inline;
+}
+
+div.thumbnails div span {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  text-shadow: 1px 1px 2px black;
+}
+
+div.thumbnails img.active {
+  opacity: 1.0;
+  width: 15%;
+}
+
+div.thumbnails img:hover {
+  opacity: 1.0;  
+}
+</style>
+<script src="popcorn-complete.js"></script>
+<script src="jquery.min.js"></script>
+<script src="cornish.js"></script>
+<script>
+$(window).ready(function() {
+  $(".thumbnails img").click(function() {
+    var chapterStart = Cornish.getActiveDurations(this)[0].start;
+    $(".primary-sync-source")[0].currentTime = chapterStart;
+  });
+});
+</script>
+<video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay class="primary-sync-source" controls></video>
+<div class="thumbnails">
+  <div>
+    <img src="timeline_images/1927.jpg" data-active-during="3-5" data-year="1927">
+    <span>1927</span>
+  </div>
+  <div>
+    <img src="timeline_images/1941.jpg" data-active-during="23-31">
+    <span>1941</span>
+  </div>
+  <div>
+    <img src="timeline_images/1945.jpg" data-active-during="32-40">
+    <span>1945</span>
+  </div>
+  <div>
+    <img src="timeline_images/1965.jpg" data-active-during="41-49">   
+    <span>1965<span>
+  </div>
+  <div>
+    <img src="timeline_images/1968.jpg" data-active-during="64-73">
+    <span>1968</span>
+  </div>
+  <div>
+    <img src="timeline_images/1973.jpg" data-active-during="74-92">
+    <span>1973</span>
+  </div>
+  <div>
+    <img src="timeline_images/1980.jpg" data-active-during="146-155">
+    <span>1980</span>
+  </div>
+  <div>
+    <img src="timeline_images/1994.jpg" data-active-during="180-188">
+    <span>1994</span>
+  </div>
+  <div>
+    <img src="timeline_images/2011.jpg" data-active-during="193-206">
+    <span>today</span>
+  </div>
+</div>
