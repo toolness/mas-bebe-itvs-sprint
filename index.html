@@ -11,8 +11,15 @@ body, video { margin: 0; }
 #vidholder2 { position: absolute; top: %25; left: %25; z-index: 99; }
 #vidholder3 { position: absolute; top: %25; left: %25; z-index: 99; }
 #vidholder4 { position: absolute; top: %25; left: %25; z-index: 99; }
-#time { position: absolute; top: 25px; right: 50px; z-index: 99; color: white; font-size: 36pt; opacity: 0.5; }
-.timefont { font-family: "Neucha", Arial, serif; font-weight: 700; }
+#ribbon {
+  position: absolute;
+  top: 0px;
+  font-size: 48pt;
+  color: white;
+  z-index: 900;
+  font-family: "Neucha";
+  font-weight: 700;
+}
 
 input { width: 72px; }
 .thumbnails {
@@ -89,11 +96,27 @@ jQuery.fn.extend({
         $("#background").width($(document).width()); 
 	var pop = Popcorn("#background");
 	$(".thumbnail").chapterize(pop, "#background").each(function() {
-  	pop.footnote({
+	  var self = $(this);
+	  var year = self.attr("data-year");
+  	pop.code({
   	  start: parseInt($(this).attr("data-start")),
   	  end: parseInt($(this).attr("data-end")),
-  	  target: "time",
-  	  text: $(this).attr("data-year")
+  	  onStart: function() {
+  	    $("#ribbon").text(year.toString()).css({
+  	      left: "-" + ($("#ribbon").width()) + "px",
+  	      "-moz-transition": "left 0.5s"
+  	    });
+  	    setTimeout(function() {
+          $("#ribbon").css({
+    	      left: "0px"
+    	    });
+    		}, 0);
+	    },
+	    onEnd: function() {
+  	    $("#ribbon").text(year.toString()).css({
+  	      left: "-" + ($("#ribbon").width()) + "px",
+	      });
+      }
     });
   });
   
@@ -125,7 +148,7 @@ jQuery.fn.extend({
 	//	$("#question > input").focus();
 //	}).play(); 
 	
-	
+	/*
 	pop.videopop({
 	target: 'vidholder',
 	start: 4,
@@ -133,7 +156,7 @@ jQuery.fn.extend({
 	source: "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm",
 	name: "VirginiaSterliziation",	
 	poster: "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/*JPGES/1927_Holmes.jpg"
-	});
+	});*/
 
 });
 
@@ -148,8 +171,8 @@ function checkSubmit(){
 </script>
 </head>
 <body>
+<div id="ribbon"></div>
 <div id="content">
-<div id="time" class="timefont"></div>
 <div id="vidholder"></div>
 <div id="question">Year of your birth: <input type="text" onKeyPress="checkSubmit(event)" name="year" maxlength="4"></div>
 <!-- For Production Only! The Video Is Freakin' Huge! -->
