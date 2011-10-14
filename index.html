@@ -18,6 +18,15 @@ body, video { margin: 0; }
   font-weight: 700;
 }
 
+#ribbon-holder {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 480px;
+  overflow: hidden;
+}
+
 #vidholder {
   position: absolute;
   top: 10px;
@@ -267,8 +276,10 @@ function checkSubmit(){
 </script>
 </head>
 <body>
-<div id="ribbon"></div>
-<div id="crazy-ribbon-1"></div>
+<div id="ribbon-holder">
+  <div id="ribbon"></div>
+  <div id="crazy-ribbon-1"></div>
+</div>
 <div id="vidholder"></div>
 <div id="content">
 <div id="question">Year of your birth: <input type="text" onKeyPress="checkSubmit(event)" name="year" maxlength="4"></div>
