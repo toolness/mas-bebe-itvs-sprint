@@ -145,44 +145,6 @@ div.lightbox-content video {
   width: 100%;
 }
 </style>
-<script src="popcorn-complete.js"></script>
-<script src="jquery.min.js"></script>
-<script src="cornish.js"></script>
-<script>
-$(window).ready(function() {
-  var video = $(".primary-sync-source")[0];
-  
-  // When user clicks on a timeline thumbnail, take the main video straight
-  // to its "chapter".
-  $(".thumbnails div").click(function goToChapterStart() {
-    video.currentTime = Cornish.getActiveDurations(this)[0].start;
-  });
-
-  // When a lightbox with a video is closed, continue playing the main
-  // video.
-  $(".lightbox-close-button").click(function closeLightbox() {
-    $("div.lightbox-content").empty();
-    video.play();
-    $("div.lightbox-overlay").fadeOut();
-  });
-
-  // When the user clicks on a hyperlink that is meant to be played in
-  // a lightbox, prevent the default behavior and show the video in 
-  // the lightbox.
-  $("a.lightbox").click(function showInLightbox() {
-    video.pause();
-
-    var lightboxVideo = $("<video autoplay controls>");
-    lightboxVideo.attr("src", this.href);
-    lightboxVideo.bind("ended", function() {
-      $(".lightbox-close-button").click();
-    });
-    $("div.lightbox-content").append(lightboxVideo);    
-    $("div.lightbox-overlay").fadeIn();
-    return false;
-  });
-});
-</script>
 <video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay class="primary-sync-source" controls></video>
 <div class="lightbox-overlay" style="display: none">
   <div class="lightbox-window">
@@ -263,3 +225,40 @@ $(window).ready(function() {
     <a class="lightbox" href="resources/wilson.webm">CA Prop 187</a>
   </li>
 </ul>
+<script src="popcorn-complete.js"></script>
+<script src="jquery.min.js"></script>
+<script src="cornish.js"></script>
+<script>
+$(window).ready(function() {
+  var video = $(".primary-sync-source")[0];
+  
+  // When user clicks on a timeline thumbnail, take the main video straight
+  // to its "chapter".
+  $(".thumbnails div").click(function goToChapterStart() {
+    video.currentTime = Cornish.getActiveDurations(this)[0].start;
+  });
+
+  // When a lightbox with a video is closed, continue playing the main
+  // video.
+  $(".lightbox-close-button").click(function closeLightbox() {
+    $("div.lightbox-content").empty();
+    video.play();
+    $("div.lightbox-overlay").fadeOut();
+  });
+
+  // When the user clicks on a hyperlink that is meant to be played in
+  // a lightbox, prevent the default behavior and show the video in 
+  // the lightbox.
+  $("a.lightbox").click(function showInLightbox() {
+    var lightboxVideo = $("<video autoplay controls>");
+    video.pause();
+    lightboxVideo.attr("src", this.href);
+    lightboxVideo.bind("ended", function() {
+      $(".lightbox-close-button").click();
+    });
+    $("div.lightbox-content").append(lightboxVideo);    
+    $("div.lightbox-overlay").fadeIn();
+    return false;
+  });
+});
+</script>
