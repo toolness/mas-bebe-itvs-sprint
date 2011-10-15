@@ -191,6 +191,10 @@ a.project-link:hover {
   color: yellow;
   z-index: 500;
 }
+
+.pause-indicator .instructions {
+  font-size: 10px;
+}
 </style>
 <video
  src="http://labs.toolness.com/temp/mas-bebe/masbebes-854x480.webm"
@@ -276,7 +280,8 @@ a.project-link:hover {
   </li>
 </ul>
 <div class="pause-indicator ribbon" style="display: none">
-  Video paused. Click to continue playback.
+  Video paused.
+  <div class="instructions">Click to continue playback.</div>
 </div>
 <div class="titles"></div>
 <script src="popcorn-complete.min.js"></script>
@@ -312,7 +317,8 @@ $(window).ready(function() {
   $(".lightbox-close-button").click(function closeLightbox() {
     $("div.lightbox-overlay").fadeOut(function() {
       $("div.lightbox-content").empty();
-      video.play();
+      if (!$(video).data("wasVideoPaused"))
+        video.play();
     });
   });
 
@@ -321,6 +327,7 @@ $(window).ready(function() {
   // the lightbox.
   $("a.lightbox").click(function showInLightbox() {
     var lightboxVideo = $("<video autoplay controls>");
+    $(video).data("wasVideoPaused", video.paused);
     video.pause();
     lightboxVideo.attr("src", this.href);
     lightboxVideo.bind("ended", function() {
