@@ -289,6 +289,9 @@ a.project-link:hover {
 <script src="cornish.js"></script>
 <script src="cornish.jquery.js"></script>
 <script>
+// We want the year to show up in the frame as well as
+// the timeline thumbnails. To avoid repeating ourselves in
+// the HTML markup, we'll just do some DOM manipulation here.
 $(".thumbnails div").clone().appendTo(".titles");
 $(".titles div").children().not(".year").remove();
 $(".titles .year").addClass('ribbon');
