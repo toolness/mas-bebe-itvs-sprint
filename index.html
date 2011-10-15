@@ -287,6 +287,7 @@ a.project-link:hover {
 <script src="popcorn-complete.min.js"></script>
 <script src="jquery.min.js"></script>
 <script src="cornish.js"></script>
+<script src="cornish.jquery.js"></script>
 <script>
 $(".thumbnails div").clone().appendTo(".titles");
 $(".titles div").children().not(".year").remove();
@@ -309,7 +310,7 @@ $(window).ready(function() {
   // When user clicks on a timeline thumbnail, take the main video straight
   // to its "chapter".
   $(".thumbnails div").click(function goToChapterStart() {
-    video.currentTime = Cornish.getActiveDurations(this)[0].start;
+    video.currentTime = $(this).activeDurations(0).start;
   });
 
   // When a lightbox with a video is closed, continue playing the main
