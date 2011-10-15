@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
-<head>
 <title>Mas Bebes</title>
+<base target="_blank">
 <style>
 html, body {
   padding: 0px;
@@ -56,6 +56,50 @@ div.thumbnails div.active img {
 div.thumbnails img:hover {
   opacity: 1.0;  
 }
+
+ul.additional-media {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  right: 10px;
+  text-align: center;
+  list-style-type: none;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+  padding: 0;
+}
+
+ul.additional-media li {
+  display: inline;
+}
+
+ul.additional-media li a {
+  opacity: 0.2;
+  color: white;
+  text-decoration: none;
+  -moz-transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+}
+
+ul.additional-media li.active a {
+  opacity: 0.8;
+}
+
+ul.additional-media li a:hover {
+  opacity: 1.0;
+  color: yellow;
+}
+
+ul.additional-media li:after {
+  opacity: 0.1;
+  color: white;
+  content: '/';
+}
+
+ul.additional-media li:last-child:after {
+  content: none;
+}
 </style>
 <script src="popcorn-complete.js"></script>
 <script src="jquery.min.js"></script>
@@ -107,3 +151,38 @@ $(window).ready(function() {
     <span>today</span>
   </div>
 </div>
+<ul class="additional-media">
+  <li data-active-during="2-6">
+    <a href="resources/darwin.webm">Buck v Bell</a>
+  </li>
+  <li data-active-during="24-32">
+    <a href="http://www.eugenicsarchive.org/eugenics/">The Eugenics Archive</a>
+  </li>
+  <li data-active-during="25-33">
+    <a href="http://www.5min.com/Video/Mexican-American-Women-in-the-Home-Front-in-World-War-II-268423823">Mexican American Women in WWII</a>
+  </li>
+  <li data-active=during="33-41">
+    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1945_OperationWetback.webm">Operation Wetback</a>
+  </li>
+  <li data-active-during="42-50">
+    <a href="resources/operacion.webm">Forced Sterilization</a>
+  </li>
+  <li data-active-during="65-74">
+    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1968_NixonBC_Appalachia.webm">Nixon on Appalachia</a>
+  </li>
+  <li data-active-during="66-75">
+    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1972_Rumsfeld.webm">Rumsfeld in 1972</a>
+  </li>
+  <li data-active-during="75-93">
+    <a href="resources/nixon.webm">Nixon on Eugenics</a>
+  </li>
+  <li data-active-during="147-156">
+    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm">Virginia Sterilization in 1980</a>
+  </li>
+  <li data-active-during="148-157">
+    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_Sterilization_News_Map.webm">Sterilization News Map</a>
+  </li>
+  <li data-active-during="181-189">
+    <a href="resources/wilson.webm">CA Prop 187</a>
+  </li>
+</ul>
