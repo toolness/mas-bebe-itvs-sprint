@@ -1,77 +1,29 @@
 <!DOCTYPE HTML>
-<head>
-<title>mas bebes</title>
-<link href='http://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
-<style type="text/css">
-body, video { margin: 0; }
-#content { position: absolute; top 0; left 0; border: 0; margin: 0; width: 100%;}
-#question { display: none; position: absolute; top: 100px; left: 250px; z-index: 99;}
-#background { position: absolute; top 0; left: 0; margin: 0; }
-#ribbon {
-  position: absolute;
-  top: 10px;
-  padding-right: 10px;
-  font-size: 48pt;
-  color: white;
-  z-index: 900;
-  font-family: "Neucha";
-  font-weight: 700;
-}
-
-#ribbon-holder {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 480px;
+<meta charset="utf-8">
+<title>¿Más Bebés?</title>
+<base target="_blank">
+<style>
+html, body {
+  padding: 0px;
+  background: black;
+  margin: 0px;
+  padding: 0px;
   overflow: hidden;
 }
 
-#vidholder {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 10000;
-  color: white;
-  background: transparent;
-  font-size: 48pt;  
+.primary-sync-source {
+  width: 100%;
 }
 
-#crazy-ribbon-1 {
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
-  position: absolute;
-  top: 150px;
-  padding: 10px;
-  font-size: 9pt;
-  color: white;
-  z-index: 900;
-  background: rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-}
-
-div#crazy-ribbon-1:hover {
-  background: black;
-  color: yellow;
-}
-
-#crazy-ribbon-1 a {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-#crazy-ribbon-1 a:hover {
-  text-decoration: underline;
-}
-
-input { width: 72px; }
-.thumbnails {
+div.thumbnails {
   position: absolute;
   bottom: 50px;
   left: 0px;
   right: 0px;
+  text-align: center;
 }
 
-.thumbnail {
+div.thumbnails img {
   width: 10%;
   -moz-transition-property: width, opacity;
   -moz-transition-duration: 0.5s;
@@ -81,229 +33,260 @@ input { width: 72px; }
   -o-transition-duration: 0.5s;
   padding: 0px;
   opacity: 0.5;
+  cursor: pointer;
 }
 
-.focused, .in-chapter {
+div.thumbnails div {
+  position: relative;
+  display: inline;
+}
+
+div.thumbnails div span {
+  position: absolute;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  text-shadow: 2px 2px 3px black;
+  padding: 4px;
+  bottom: 0px;
+  right: 0px;
+  pointer-events: none;
+}
+
+div.thumbnails div.active img {
+  opacity: 1.0;
+  width: 15%;
+}
+
+div.thumbnails img:hover {
+  opacity: 1.0;  
+}
+
+ul.additional-media {
+  position: absolute;
+  bottom: 0px;
+  left: 10px;
+  right: 10px;
+  text-align: center;
+  list-style-type: none;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 12px;
+  padding: 0;
+}
+
+ul.additional-media li {
+  display: inline;
+}
+
+ul.additional-media li a {
+  opacity: 0.2;
+  color: white;
+  text-decoration: none;
+  -moz-transition: opacity 0.5s;
+  -webkit-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
+}
+
+ul.additional-media li.active a {
+  opacity: 0.8;
+}
+
+ul.additional-media li a:hover {
   opacity: 1.0;
 }
 
-.in-chapter {
-  width: 15%;
+ul.additional-media li:after {
+  opacity: 0.1;
+  color: white;
+  content: '/';
+}
+
+ul.additional-media li:last-child:after {
+  content: none;
+}
+
+div.lightbox-overlay {
+  z-index: 5000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+div.lightbox-close-button {
+  text-align: right;
+  padding: 3px;
+  font-family: "Helvetica Neue";
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+div.lightbox-close-button:after {
+  color: white;
+  content: "x";
+}
+
+div.lightbox-close-button:hover {
+  background: firebrick;
+  color: white;
+}
+
+div.lightbox-window {
+  position: relative;
+  color: black;
+  width: 70%;
+  margin: 5% auto;
+}
+
+div.lightbox-content {
+  background: transparent;
+}
+
+div.lightbox-content video {
+  width: 100%;
+}
+
+a.project-link {
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 8px;
+  text-decoration: none;
+  color: white;
+  font-family: Baskerville, Georgia, serif;
+  opacity: 0.5;
+  font-style: italic;
+  -moz-transition: opacity 1s;
+  -webkit-transition: opacity 1s;
+  -o-transition: opacity 1s;
+}
+
+a.project-link:hover {
+  opacity: 1.0;
 }
 </style>
-<script type="text/javascript" src="popcorn-complete.js"></script>
-<script type="text/javascript" src="videopop.js"></script>
-<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-<script>
-jQuery.fn.extend({
-  // Connect the currently selected elements to serve as
-  // chapter markers for the given video. Each element is given the
-  // 'focused' class when the mouse hovers over them,
-  // and the 'in-chapter' class when the video is in their respective
-  // chapter. When they are clicked, the video goes to the beginning
-  // of the respective chapter.
-  //
-  // Each selected element is expected to have 'data-start'
-  // and 'data-end' attributes that specify when (in seconds) the 
-  // element's chapter begins and ends.
-  chapterize: function(pop, video) {
-    this.each(function() {
-      var self = $(this);
-      self.hover(function() {
-        self.addClass("focused");      
-      }, function() {
-        self.removeClass("focused");      
-      }).click(function() {
-        $(video)[0].currentTime = self.attr("data-start");
-      });
-      pop.code({
-        start: parseInt(self.attr("data-start")),
-        end: parseInt(self.attr("data-end")),
-        onStart: function() {
-          self.addClass("in-chapter");
-        },
-        onEnd: function() {
-          self.removeClass("in-chapter");
-        }
-      });
-    });
-    return this;
-  }
-});
-</script>
-
-<script type="text/javascript">
-jQuery.fn.extend({
-  ribbonize: function(html) {
-    var self = this;
-    var widget = {
-      show: function() {
-        self.html(html).css({
-          right: "-" + (self.outerWidth()) + "px",
-          "-moz-transition": "right 0.5s",
-          "-webkit-transition": "right 0.5s"
-        });
-        setTimeout(function() {
-          self.css({
-    	      right: "0px"
-    	    });
-    		}, 0);
-    	},
-    	hide: function() {
-        self.html(html).css({
-          right: "-" + (self.outerWidth()) + "px",
-          "-moz-transition": "right 0.5s"
-        });
-  	  }
-  	};
-  	return widget;
-  }
-});
-
-   // ensure the web page (DOM) has loaded
-      document.addEventListener("DOMContentLoaded", function () {
-        $("#background").width($(document).width()); 
-	var pop = Popcorn("#background");
-	$(".thumbnail").chapterize(pop, "#background").each(function() {
-	  var year = $(this).attr("data-year");
-	  var widget = $("#ribbon").ribbonize(year.toString());
-  	pop.code({
-  	  start: parseInt($(this).attr("data-start")),
-  	  end: parseInt($(this).attr("data-end")),
-  	  onStart: widget.show,
-  	  onEnd: widget.hide
-    });
-  });
-  
-  // This is the code to bust a ribbon!
-  // First number of each array is start time in secs
-  // Second number is end time
-  // Third string is HTML content of ribbon.
-  [
-    [2, 6, '<span class="video">Watch Buck vs. Bell</span>', 'resources/darwin.webm'],
-    [24, 32, '<a href="http://www.eugenicsarchive.org/eugenics/">Visit the Eugenics Archive</a>'],
-    [25, 33, '<a target="_blank" href="http://www.5min.com/Video/Mexican-American-Women-in-the-Home-Front-in-World-War-II-268423823">Watch a video about Mexican-American women</a>'],
-    [33, 41, '<span class="video">Watch a video about deportation</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1945_OperationWetback.webm'],
-    [42, 50, '<span class="video">Watch a video depicting forced sterilization</a>', 'resources/operacion.webm'],
-    [65, 74, '<span class="video">Watch family planning news report</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1968_NixonBC_Appalachia.webm'],
-    [66, 75, '<span class="video">Watch news report on Rumsfeld</a>', "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1972_Rumsfeld.webm"],
-    [75, 93, '<span class="video">Hear Richard Nixon on eugenics</a>', 'resources/nixon.webm'],
-    [147, 156, '<span class="video">Watch a sterilization story</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm'],
-    [148, 157, '<span class="video">Learn about a sterilization program</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_Sterilization_News_Map.webm'],
-    [181, 189, '<span class="video">Hear CA governor Pete Wilson on Prop 187</a>', 'resources/wilson.webm'],
-
-  ].forEach(function(ops) {
-    var start = ops[0];
-    var end = ops[1];
-    var text = ops[2];
-    var url = ops[3];
-    var widget = $("#crazy-ribbon-1").ribbonize(text);
-    pop.code({
-      start: start,
-      end: end,
-  	  onStart: function(){ 
-		widget.show();
-		$(".video").click(function(){
-			console.log("click!" + ops[3]);
-			console.log("starting pop" + start + " src is " + url );
-      var video = $("<video/>", { src: url, autoplay: "true", width: "240", controls: "true"});
-      $("#vidholder").append(video);
-      console.log(video[0]);
-      video.fadeIn(3000);
-  		vpop = Popcorn(video[0]);
-  		vpop.listen("play", function() {
-      			Popcorn("#background").pause();
-  		});
-  		vpop.listen("pause", function() {
-      			Popcorn("#background").play();
-  		});
-  		vpop.listen("ended", function() {
-      			Popcorn("#background").play();
-      			video.remove();
-  		});
-		});
-	  },
-  	onEnd: function() {
-  	  $(".video").unbind();
-  	  widget.hide();
-  	}
-    });
-  });
-  
-	[[3, 49],
-	 [65, 82],
-	 [147, 161],
-	 [193, 206]].forEach(function(op) {
-	   var start = op[0];
-	   var end = op[1];
-	   pop.code({
-	     start: op[0],
-	     end: op[1],
-	     onStart: function() {
-	       $(".thumbnails").fadeIn("slow");
-       },
-       onEnd: function() {
-         $(".thumbnails").fadeOut("slow");
-       }
-     });
-   });
-         // add a footnote at 2 seconds, and remove it at 6 seconds
-	
-// kill me
-
-// pop.exec( 2.5, function() {
-   // 		console.log("pausing!");
-    //		this.pause();
-    	//	$("#question").show();
-	//	$("#question > input").focus();
-//	}).play(); 
-	
-	/*
-	pop.videopop({
-	target: 'vidholder',
-	start: 4,
-	end: 24,
-	source: "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm",
-	name: "VirginiaSterliziation",	
-	poster: "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/*JPGES/1927_Holmes.jpg"
-	});*/
-
-});
-
-function checkSubmit(){
-	var year = ($('input').val());
-	if (year.length == 4)	{
-		$("#question").remove();
-		Popcorn("#background").play();
-		}
-}
-
-</script>
-</head>
-<body>
-<div id="ribbon-holder">
-  <div id="ribbon"></div>
-  <div id="crazy-ribbon-1"></div>
-</div>
-<div id="vidholder"></div>
-<div id="content">
-<div id="question">Year of your birth: <input type="text" onKeyPress="checkSubmit(event)" name="year" maxlength="4"></div>
-<!-- For Production Only! The Video Is Freakin' Huge! -->
-<<video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay id="background" controls>
-  <!-- For Development Only; quick reload speeds! -->
-  <!-- <video src="http://videos.mozilla.org/serv/webmademovies/wtfpopcorn.ogv" id="background" controls> -->
+<video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay class="primary-sync-source"></video>
+<a class="project-link" href="http://laprensa-sandiego.org/featured/%C2%BFmas-bebes-documentary-on-sterilization-of-hispanic-women-2/">¿Más Bebés?</a>
+<div class="lightbox-overlay" style="display: none">
+  <div class="lightbox-window">
+    <div class="lightbox-close-button"></div>
+    <div class="lightbox-content"></div>
   </div>
-<div class="thumbnails" style="display: none;">
-  <img src="timeline_images/1927.jpg" class="thumbnail" data-start="3" data-end="5" data-year="1927">
-  <img src="timeline_images/1941.jpg" class="thumbnail" data-start="23" data-end="31" data-year="1941">
-  <img src="timeline_images/1945.jpg" class="thumbnail" data-start="32" data-end="40" data-year="1945">
-  <img src="timeline_images/1965.jpg" class="thumbnail" data-start="41" data-end="49" data-year="1965">
-  <img src="timeline_images/1968.jpg" class="thumbnail" data-start="64" data-end="73" data-year="1968">
-  <img src="timeline_images/1973.jpg" class="thumbnail" data-start="74" data-end="92" data-year="1973">
-  <img src="timeline_images/1980.jpg" class="thumbnail" data-start="146" data-end="155" data-year="1980">
-  <img src="timeline_images/1994.jpg" class="thumbnail" data-start="180" data-end="188" data-year="1994">
-  <img src="timeline_images/2011.jpg" class="thumbnail" data-start="193" data-end="206" data-year="today">
-
 </div>
-</body>
-</html>
+<div class="thumbnails">
+  <div data-active-during="3-5">
+    <img src="timeline_images/1927.jpg">
+    <span>1927</span>
+  </div>
+  <div data-active-during="23-31">
+    <img src="timeline_images/1941.jpg">
+    <span>1941</span>
+  </div>
+  <div data-active-during="32-40">
+    <img src="timeline_images/1945.jpg">
+    <span>1945</span>
+  </div>
+  <div data-active-during="41-49">
+    <img src="timeline_images/1965.jpg">
+    <span>1965<span>
+  </div>
+  <div data-active-during="64-73">
+    <img src="timeline_images/1968.jpg">
+    <span>1968</span>
+  </div>
+  <div data-active-during="74-92">
+    <img src="timeline_images/1973.jpg">
+    <span>1973</span>
+  </div>
+  <div data-active-during="146-155">
+    <img src="timeline_images/1980.jpg">
+    <span>1980</span>
+  </div>
+  <div data-active-during="180-188">
+    <img src="timeline_images/1994.jpg">
+    <span>1994</span>
+  </div>
+  <div data-active-during="193-206">
+    <img src="timeline_images/2011.jpg">
+    <span>today</span>
+  </div>
+</div>
+<ul class="additional-media">
+  <li data-active-during="2-6">
+    <a class="lightbox" href="http://labs.toolness.com/temp/mas-bebe/darwin.webm">Buck v Bell</a>
+  </li>
+  <li data-active-during="24-32">
+    <a href="http://www.eugenicsarchive.org/eugenics/">The Eugenics Archive</a>
+  </li>
+  <li data-active-during="25-33">
+    <a href="http://www.5min.com/Video/Mexican-American-Women-in-the-Home-Front-in-World-War-II-268423823">Mexican American Women in WWII</a>
+  </li>
+  <li data-active=during="33-41">
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1945_OperationWetback.webm">Operation Wetback</a>
+  </li>
+  <li data-active-during="42-50">
+    <a class="lightbox" href="http://labs.toolness.com/temp/mas-bebe/operacion.webm">Forced Sterilization in Puerto Rico</a>
+  </li>
+  <li data-active-during="65-74">
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1968_NixonBC_Appalachia.webm">Nixon on Appalachia</a>
+  </li>
+  <li data-active-during="66-75">
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1972_Rumsfeld.webm">Rumsfeld in 1972</a>
+  </li>
+  <li data-active-during="75-93">
+    <a class="lightbox" href="http://labs.toolness.com/temp/mas-bebe/nixon.webm">Nixon on Eugenics</a>
+  </li>
+  <li data-active-during="147-156">
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm">Virginia Sterilization in 1980</a>
+  </li>
+  <li data-active-during="148-157">
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_Sterilization_News_Map.webm">Sterilization News Map</a>
+  </li>
+  <li data-active-during="181-189">
+    <a class="lightbox" href="http://labs.toolness.com/temp/mas-bebe/wilson.webm">CA Prop 187</a>
+  </li>
+</ul>
+<script src="popcorn-complete.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="cornish.js"></script>
+<script>
+$(window).ready(function() {
+  var video = $(".primary-sync-source")[0];
+  
+  // Clicking on the video should toggle pause/play.
+  $(video).click(function() { video.paused ? video.play() : video.pause(); });
+  
+  // When user clicks on a timeline thumbnail, take the main video straight
+  // to its "chapter".
+  $(".thumbnails div").click(function goToChapterStart() {
+    video.currentTime = Cornish.getActiveDurations(this)[0].start;
+  });
+
+  // When a lightbox with a video is closed, continue playing the main
+  // video.
+  $(".lightbox-close-button").click(function closeLightbox() {
+    $("div.lightbox-content").empty();
+    video.play();
+    $("div.lightbox-overlay").fadeOut();
+  });
+
+  // When the user clicks on a hyperlink that is meant to be played in
+  // a lightbox, prevent the default behavior and show the video in 
+  // the lightbox.
+  $("a.lightbox").click(function showInLightbox() {
+    var lightboxVideo = $("<video autoplay controls>");
+    video.pause();
+    lightboxVideo.attr("src", this.href);
+    lightboxVideo.bind("ended", function() {
+      $(".lightbox-close-button").click();
+    });
+    $("div.lightbox-content").append(lightboxVideo);    
+    $("div.lightbox-overlay").fadeIn();
+    return false;
+  });
+});
+</script>

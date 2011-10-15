@@ -1,0 +1,309 @@
+<!DOCTYPE HTML>
+<head>
+<title>mas bebes</title>
+<link href='http://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
+<style type="text/css">
+body, video { margin: 0; }
+#content { position: absolute; top 0; left 0; border: 0; margin: 0; width: 100%;}
+#question { display: none; position: absolute; top: 100px; left: 250px; z-index: 99;}
+#background { position: absolute; top 0; left: 0; margin: 0; }
+#ribbon {
+  position: absolute;
+  top: 10px;
+  padding-right: 10px;
+  font-size: 48pt;
+  color: white;
+  z-index: 900;
+  font-family: "Neucha";
+  font-weight: 700;
+}
+
+#ribbon-holder {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 480px;
+  overflow: hidden;
+}
+
+#vidholder {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10000;
+  color: white;
+  background: transparent;
+  font-size: 48pt;  
+}
+
+#crazy-ribbon-1 {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  position: absolute;
+  top: 150px;
+  padding: 10px;
+  font-size: 9pt;
+  color: white;
+  z-index: 900;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+div#crazy-ribbon-1:hover {
+  background: black;
+  color: yellow;
+}
+
+#crazy-ribbon-1 a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+#crazy-ribbon-1 a:hover {
+  text-decoration: underline;
+}
+
+input { width: 72px; }
+.thumbnails {
+  position: absolute;
+  bottom: 50px;
+  left: 0px;
+  right: 0px;
+}
+
+.thumbnail {
+  width: 10%;
+  -moz-transition-property: width, opacity;
+  -moz-transition-duration: 0.5s;
+  -webkit-transition-property: width, opacity;
+  -webkit-transition-duration: 0.5s;
+  -o-transition-property: width, opacity;
+  -o-transition-duration: 0.5s;
+  padding: 0px;
+  opacity: 0.5;
+}
+
+.focused, .in-chapter {
+  opacity: 1.0;
+}
+
+.in-chapter {
+  width: 15%;
+}
+</style>
+<script type="text/javascript" src="popcorn-complete.js"></script>
+<script type="text/javascript" src="videopop.js"></script>
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script>
+jQuery.fn.extend({
+  // Connect the currently selected elements to serve as
+  // chapter markers for the given video. Each element is given the
+  // 'focused' class when the mouse hovers over them,
+  // and the 'in-chapter' class when the video is in their respective
+  // chapter. When they are clicked, the video goes to the beginning
+  // of the respective chapter.
+  //
+  // Each selected element is expected to have 'data-start'
+  // and 'data-end' attributes that specify when (in seconds) the 
+  // element's chapter begins and ends.
+  chapterize: function(pop, video) {
+    this.each(function() {
+      var self = $(this);
+      self.hover(function() {
+        self.addClass("focused");      
+      }, function() {
+        self.removeClass("focused");      
+      }).click(function() {
+        $(video)[0].currentTime = self.attr("data-start");
+      });
+      pop.code({
+        start: parseInt(self.attr("data-start")),
+        end: parseInt(self.attr("data-end")),
+        onStart: function() {
+          self.addClass("in-chapter");
+        },
+        onEnd: function() {
+          self.removeClass("in-chapter");
+        }
+      });
+    });
+    return this;
+  }
+});
+</script>
+
+<script type="text/javascript">
+jQuery.fn.extend({
+  ribbonize: function(html) {
+    var self = this;
+    var widget = {
+      show: function() {
+        self.html(html).css({
+          right: "-" + (self.outerWidth()) + "px",
+          "-moz-transition": "right 0.5s",
+          "-webkit-transition": "right 0.5s"
+        });
+        setTimeout(function() {
+          self.css({
+    	      right: "0px"
+    	    });
+    		}, 0);
+    	},
+    	hide: function() {
+        self.html(html).css({
+          right: "-" + (self.outerWidth()) + "px",
+          "-moz-transition": "right 0.5s"
+        });
+  	  }
+  	};
+  	return widget;
+  }
+});
+
+   // ensure the web page (DOM) has loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        $("#background").width($(document).width()); 
+	var pop = Popcorn("#background");
+	$(".thumbnail").chapterize(pop, "#background").each(function() {
+	  var year = $(this).attr("data-year");
+	  var widget = $("#ribbon").ribbonize(year.toString());
+  	pop.code({
+  	  start: parseInt($(this).attr("data-start")),
+  	  end: parseInt($(this).attr("data-end")),
+  	  onStart: widget.show,
+  	  onEnd: widget.hide
+    });
+  });
+  
+  // This is the code to bust a ribbon!
+  // First number of each array is start time in secs
+  // Second number is end time
+  // Third string is HTML content of ribbon.
+  [
+    [2, 6, '<span class="video">Watch Buck vs. Bell</span>', 'resources/darwin.webm'],
+    [24, 32, '<a href="http://www.eugenicsarchive.org/eugenics/">Visit the Eugenics Archive</a>'],
+    [25, 33, '<a target="_blank" href="http://www.5min.com/Video/Mexican-American-Women-in-the-Home-Front-in-World-War-II-268423823">Watch a video about Mexican-American women</a>'],
+    [33, 41, '<span class="video">Watch a video about deportation</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1945_OperationWetback.webm'],
+    [42, 50, '<span class="video">Watch a video depicting forced sterilization</a>', 'resources/operacion.webm'],
+    [65, 74, '<span class="video">Watch family planning news report</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1968_NixonBC_Appalachia.webm'],
+    [66, 75, '<span class="video">Watch news report on Rumsfeld</a>', "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1972_Rumsfeld.webm"],
+    [75, 93, '<span class="video">Hear Richard Nixon on eugenics</a>', 'resources/nixon.webm'],
+    [147, 156, '<span class="video">Watch a sterilization story</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm'],
+    [148, 157, '<span class="video">Learn about a sterilization program</a>', 'http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_Sterilization_News_Map.webm'],
+    [181, 189, '<span class="video">Hear CA governor Pete Wilson on Prop 187</a>', 'resources/wilson.webm'],
+
+  ].forEach(function(ops) {
+    var start = ops[0];
+    var end = ops[1];
+    var text = ops[2];
+    var url = ops[3];
+    var widget = $("#crazy-ribbon-1").ribbonize(text);
+    pop.code({
+      start: start,
+      end: end,
+  	  onStart: function(){ 
+		widget.show();
+		$(".video").click(function(){
+			console.log("click!" + ops[3]);
+			console.log("starting pop" + start + " src is " + url );
+      var video = $("<video/>", { src: url, autoplay: "true", width: "240", controls: "true"});
+      $("#vidholder").append(video);
+      console.log(video[0]);
+      video.fadeIn(3000);
+  		vpop = Popcorn(video[0]);
+  		vpop.listen("play", function() {
+      			Popcorn("#background").pause();
+  		});
+  		vpop.listen("pause", function() {
+      			Popcorn("#background").play();
+  		});
+  		vpop.listen("ended", function() {
+      			Popcorn("#background").play();
+      			video.remove();
+  		});
+		});
+	  },
+  	onEnd: function() {
+  	  $(".video").unbind();
+  	  widget.hide();
+  	}
+    });
+  });
+  
+	[[3, 49],
+	 [65, 82],
+	 [147, 161],
+	 [193, 206]].forEach(function(op) {
+	   var start = op[0];
+	   var end = op[1];
+	   pop.code({
+	     start: op[0],
+	     end: op[1],
+	     onStart: function() {
+	       $(".thumbnails").fadeIn("slow");
+       },
+       onEnd: function() {
+         $(".thumbnails").fadeOut("slow");
+       }
+     });
+   });
+         // add a footnote at 2 seconds, and remove it at 6 seconds
+	
+// kill me
+
+// pop.exec( 2.5, function() {
+   // 		console.log("pausing!");
+    //		this.pause();
+    	//	$("#question").show();
+	//	$("#question > input").focus();
+//	}).play(); 
+	
+	/*
+	pop.videopop({
+	target: 'vidholder',
+	start: 4,
+	end: 24,
+	source: "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm",
+	name: "VirginiaSterliziation",	
+	poster: "http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/*JPGES/1927_Holmes.jpg"
+	});*/
+
+});
+
+function checkSubmit(){
+	var year = ($('input').val());
+	if (year.length == 4)	{
+		$("#question").remove();
+		Popcorn("#background").play();
+		}
+}
+
+</script>
+</head>
+<body>
+<div id="ribbon-holder">
+  <div id="ribbon"></div>
+  <div id="crazy-ribbon-1"></div>
+</div>
+<div id="vidholder"></div>
+<div id="content">
+<div id="question">Year of your birth: <input type="text" onKeyPress="checkSubmit(event)" name="year" maxlength="4"></div>
+<!-- For Production Only! The Video Is Freakin' Huge! -->
+<<video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay id="background" controls>
+  <!-- For Development Only; quick reload speeds! -->
+  <!-- <video src="http://videos.mozilla.org/serv/webmademovies/wtfpopcorn.ogv" id="background" controls> -->
+  </div>
+<div class="thumbnails" style="display: none;">
+  <img src="timeline_images/1927.jpg" class="thumbnail" data-start="3" data-end="5" data-year="1927">
+  <img src="timeline_images/1941.jpg" class="thumbnail" data-start="23" data-end="31" data-year="1941">
+  <img src="timeline_images/1945.jpg" class="thumbnail" data-start="32" data-end="40" data-year="1945">
+  <img src="timeline_images/1965.jpg" class="thumbnail" data-start="41" data-end="49" data-year="1965">
+  <img src="timeline_images/1968.jpg" class="thumbnail" data-start="64" data-end="73" data-year="1968">
+  <img src="timeline_images/1973.jpg" class="thumbnail" data-start="74" data-end="92" data-year="1973">
+  <img src="timeline_images/1980.jpg" class="thumbnail" data-start="146" data-end="155" data-year="1980">
+  <img src="timeline_images/1994.jpg" class="thumbnail" data-start="180" data-end="188" data-year="1994">
+  <img src="timeline_images/2011.jpg" class="thumbnail" data-start="193" data-end="206" data-year="today">
+
+</div>
+</body>
+</html>
