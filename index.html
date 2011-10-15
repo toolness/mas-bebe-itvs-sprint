@@ -169,15 +169,30 @@ a.project-link:hover {
   opacity: 1.0;
 }
 
-.pause-indicator {
+.ribbon {
+  display: block;
   position: absolute;
-  top: 30px;
+  top: 10%;
   left: 0px;
   padding: 10px;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 20px;
-  color: yellow;
+  color: white;
   background: rgba(0, 0, 0, 0.75);
+}
+
+.titles div span {
+  opacity: 0;
+  -moz-transition: opacity 0.5s;
+}
+
+.titles div.active span {
+  opacity: 1;
+}
+
+.pause-indicator {
+  color: yellow;
+  z-index: 500;
 }
 </style>
 <video
@@ -205,7 +220,7 @@ a.project-link:hover {
   </div>
   <div data-active-during="41-49">
     <img src="timeline_images/1965.jpg">
-    <span>1965<span>
+    <span>1965</span>
   </div>
   <div data-active-during="64-73">
     <img src="timeline_images/1968.jpg">
@@ -263,13 +278,18 @@ a.project-link:hover {
     <a class="lightbox" href="http://labs.toolness.com/temp/mas-bebe/wilson.webm">CA Prop 187</a>
   </li>
 </ul>
-<div class="pause-indicator" style="display: none">
+<div class="pause-indicator ribbon" style="display: none">
   Video paused. Click to continue playback.
 </div>
+<div class="titles"></div>
 <script src="popcorn-complete.min.js"></script>
 <script src="jquery.min.js"></script>
 <script src="cornish.js"></script>
 <script>
+$(".thumbnails div").clone().appendTo(".titles");
+$(".titles div").children().not("span").remove();
+$(".titles span").addClass('ribbon');
+
 $(window).ready(function() {
   var video = $(".primary-sync-source")[0];
   
