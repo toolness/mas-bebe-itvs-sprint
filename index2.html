@@ -31,6 +31,7 @@ div.thumbnails img {
   -o-transition-duration: 0.5s;
   padding: 0px;
   opacity: 0.5;
+  cursor: pointer;
 }
 
 div.thumbnails div {
@@ -46,6 +47,7 @@ div.thumbnails div span {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px;
   text-shadow: 2px 2px 3px black;
+  pointer-events: none;
 }
 
 div.thumbnails div.active img {
@@ -88,7 +90,6 @@ ul.additional-media li.active a {
 
 ul.additional-media li a:hover {
   opacity: 1.0;
-  color: yellow;
 }
 
 ul.additional-media li:after {
@@ -100,19 +101,95 @@ ul.additional-media li:after {
 ul.additional-media li:last-child:after {
   content: none;
 }
+
+div.lightbox-overlay {
+  z-index: 5000;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+div.lightbox-close-button {
+  text-align: right;
+  padding: 3px;
+  font-family: "Helvetica Neue";
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+div.lightbox-close-button:after {
+  color: white;
+  content: "x";
+}
+
+div.lightbox-close-button:hover {
+  background: firebrick;
+  color: white;
+}
+
+div.lightbox-window {
+  position: relative;
+  color: black;
+  width: 640px;
+  margin: 20px auto;
+}
+
+div.lightbox-content {
+  background: transparent;
+}
+
+div.lightbox-content video {
+  width: 100%;
+}
 </style>
 <script src="popcorn-complete.js"></script>
 <script src="jquery.min.js"></script>
 <script src="cornish.js"></script>
 <script>
 $(window).ready(function() {
+  var video = $(".primary-sync-source")[0];
+  
+  // When user clicks on a timeline thumbnail, take the main video straight
+  // to its "chapter".
   $(".thumbnails div").click(function goToChapterStart() {
-    var chapterStart = Cornish.getActiveDurations(this)[0].start;
-    $(".primary-sync-source")[0].currentTime = chapterStart;
+    video.currentTime = Cornish.getActiveDurations(this)[0].start;
+  });
+
+  // When a lightbox with a video is closed, continue playing the main
+  // video.
+  $(".lightbox-close-button").click(function closeLightbox() {
+    $("div.lightbox-content").empty();
+    video.play();
+    $("div.lightbox-overlay").fadeOut();
+  });
+
+  // When the user clicks on a hyperlink that is meant to be played in
+  // a lightbox, prevent the default behavior and show the video in 
+  // the lightbox.
+  $("a.lightbox").click(function showInLightbox() {
+    video.pause();
+
+    var lightboxVideo = $("<video autoplay controls>");
+    lightboxVideo.attr("src", this.href);
+    lightboxVideo.bind("ended", function() {
+      $(".lightbox-close-button").click();
+    });
+    $("div.lightbox-content").append(lightboxVideo);    
+    $("div.lightbox-overlay").fadeIn();
+    return false;
   });
 });
 </script>
 <video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay class="primary-sync-source" controls></video>
+<div class="lightbox-overlay" style="display: none">
+  <div class="lightbox-window">
+    <div class="lightbox-close-button"></div>
+    <div class="lightbox-content"></div>
+  </div>
+</div>
 <div class="thumbnails">
   <div data-active-during="3-5">
     <img src="timeline_images/1927.jpg">
@@ -153,7 +230,7 @@ $(window).ready(function() {
 </div>
 <ul class="additional-media">
   <li data-active-during="2-6">
-    <a href="resources/darwin.webm">Buck v Bell</a>
+    <a class="lightbox" href="resources/darwin.webm">Buck v Bell</a>
   </li>
   <li data-active-during="24-32">
     <a href="http://www.eugenicsarchive.org/eugenics/">The Eugenics Archive</a>
@@ -162,27 +239,27 @@ $(window).ready(function() {
     <a href="http://www.5min.com/Video/Mexican-American-Women-in-the-Home-Front-in-World-War-II-268423823">Mexican American Women in WWII</a>
   </li>
   <li data-active=during="33-41">
-    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1945_OperationWetback.webm">Operation Wetback</a>
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1945_OperationWetback.webm">Operation Wetback</a>
   </li>
   <li data-active-during="42-50">
-    <a href="resources/operacion.webm">Forced Sterilization</a>
+    <a class="lightbox" href="resources/operacion.webm">Forced Sterilization in Puerto Rico</a>
   </li>
   <li data-active-during="65-74">
-    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1968_NixonBC_Appalachia.webm">Nixon on Appalachia</a>
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1968_NixonBC_Appalachia.webm">Nixon on Appalachia</a>
   </li>
   <li data-active-during="66-75">
-    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1972_Rumsfeld.webm">Rumsfeld in 1972</a>
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1972_Rumsfeld.webm">Rumsfeld in 1972</a>
   </li>
   <li data-active-during="75-93">
-    <a href="resources/nixon.webm">Nixon on Eugenics</a>
+    <a class="lightbox" href="resources/nixon.webm">Nixon on Eugenics</a>
   </li>
   <li data-active-during="147-156">
-    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm">Virginia Sterilization in 1980</a>
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_VirginiaSterilization_.webm">Virginia Sterilization in 1980</a>
   </li>
   <li data-active-during="148-157">
-    <a href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_Sterilization_News_Map.webm">Sterilization News Map</a>
+    <a class="lightbox" href="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/1980_Sterilization_News_Map.webm">Sterilization News Map</a>
   </li>
   <li data-active-during="181-189">
-    <a href="resources/wilson.webm">CA Prop 187</a>
+    <a class="lightbox" href="resources/wilson.webm">CA Prop 187</a>
   </li>
 </ul>
