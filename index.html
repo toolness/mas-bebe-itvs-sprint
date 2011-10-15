@@ -168,6 +168,17 @@ a.project-link {
 a.project-link:hover {
   opacity: 1.0;
 }
+
+.pause-indicator {
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  padding: 10px;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 20px;
+  color: yellow;
+  background: rgba(0, 0, 0, 0.75);
+}
 </style>
 <video
  src="http://labs.toolness.com/temp/mas-bebe/masbebes-854x480.webm"
@@ -252,6 +263,9 @@ a.project-link:hover {
     <a class="lightbox" href="http://labs.toolness.com/temp/mas-bebe/wilson.webm">CA Prop 187</a>
   </li>
 </ul>
+<div class="pause-indicator" style="display: none">
+  Video paused. Click to continue playback.
+</div>
 <script src="popcorn-complete.min.js"></script>
 <script src="jquery.min.js"></script>
 <script src="cornish.js"></script>
@@ -260,7 +274,15 @@ $(window).ready(function() {
   var video = $(".primary-sync-source")[0];
   
   // Clicking on the video should toggle pause/play.
-  $(video).click(function() { video.paused ? video.play() : video.pause(); });
+  $(video).click(function() {
+    if (video.paused) {
+      $(".pause-indicator").hide();
+      video.play();
+    } else {
+      $(".pause-indicator").show();
+      video.pause();
+    }
+  });
   
   // When user clicks on a timeline thumbnail, take the main video straight
   // to its "chapter".
