@@ -310,9 +310,10 @@ $(window).ready(function() {
   // When a lightbox with a video is closed, continue playing the main
   // video.
   $(".lightbox-close-button").click(function closeLightbox() {
-    $("div.lightbox-content").empty();
-    video.play();
-    $("div.lightbox-overlay").fadeOut();
+    $("div.lightbox-overlay").fadeOut(function() {
+      $("div.lightbox-content").empty();
+      video.play();
+    });
   });
 
   // When the user clicks on a hyperlink that is meant to be played in
