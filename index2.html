@@ -145,6 +145,25 @@ div.lightbox-content {
 div.lightbox-content video {
   width: 100%;
 }
+
+div.titles > div {
+  position: absolute;
+  width: 800px;
+  top: 0px;
+  opacity: 0;
+  color: white;
+  font-family: monospace;
+  font-size: 30px;
+  padding: 10px;
+  -moz-transition: opacity 1s;
+  margin: 0 auto;
+  text-shadow: 2px 2px 3px black;
+  font-weight: bold;
+}
+
+div.titles > div.active {
+  opacity: 1;
+}
 </style>
 <video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay class="primary-sync-source" controls></video>
 <div class="lightbox-overlay" style="display: none">
@@ -153,6 +172,7 @@ div.lightbox-content video {
     <div class="lightbox-content"></div>
   </div>
 </div>
+<div class="titles"></div>
 <div class="thumbnails">
   <div data-active-during="3-5">
     <img src="timeline_images/1927.jpg">
@@ -230,6 +250,9 @@ div.lightbox-content video {
 <script src="jquery.min.js"></script>
 <script src="cornish.js"></script>
 <script>
+$(".thumbnails").children().clone().appendTo(".titles");
+$(".titles img").remove();
+
 $(window).ready(function() {
   var video = $(".primary-sync-source")[0];
   
