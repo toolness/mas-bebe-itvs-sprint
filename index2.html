@@ -5,13 +5,14 @@
 <style>
 html, body {
   padding: 0px;
-  width: 800px;
-  margin: 0px auto;
   background: black;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
 }
 
 .primary-sync-source {
-  width: 800px;
+  width: 100%;
 }
 
 div.thumbnails {
@@ -42,12 +43,14 @@ div.thumbnails div {
 
 div.thumbnails div span {
   position: absolute;
-  bottom: 8px;
-  right: 8px;
   color: white;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 12px;
+  font-weight: bold;
   text-shadow: 2px 2px 3px black;
+  padding: 4px;
+  bottom: 0px;
+  right: 0px;
   pointer-events: none;
 }
 
@@ -134,8 +137,8 @@ div.lightbox-close-button:hover {
 div.lightbox-window {
   position: relative;
   color: black;
-  width: 640px;
-  margin: 20px auto;
+  width: 70%;
+  margin: 5% auto;
 }
 
 div.lightbox-content {
@@ -145,34 +148,14 @@ div.lightbox-content {
 div.lightbox-content video {
   width: 100%;
 }
-
-div.titles > div {
-  position: absolute;
-  width: 800px;
-  top: 0px;
-  opacity: 0;
-  color: white;
-  font-family: monospace;
-  font-size: 30px;
-  padding: 10px;
-  -moz-transition: opacity 1s;
-  margin: 0 auto;
-  text-shadow: 2px 2px 3px black;
-  font-weight: bold;
-}
-
-div.titles > div.active {
-  opacity: 1;
-}
 </style>
-<video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay class="primary-sync-source" controls></video>
+<video src="http://videos-origin.mozilla.org/serv/webmademovies/itvs/masbebes/masbebesfinal.webm" autoplay class="primary-sync-source"></video>
 <div class="lightbox-overlay" style="display: none">
   <div class="lightbox-window">
     <div class="lightbox-close-button"></div>
     <div class="lightbox-content"></div>
   </div>
 </div>
-<div class="titles"></div>
 <div class="thumbnails">
   <div data-active-during="3-5">
     <img src="timeline_images/1927.jpg">
@@ -250,9 +233,6 @@ div.titles > div.active {
 <script src="jquery.min.js"></script>
 <script src="cornish.js"></script>
 <script>
-$(".thumbnails").children().clone().appendTo(".titles");
-$(".titles img").remove();
-
 $(window).ready(function() {
   var video = $(".primary-sync-source")[0];
   
