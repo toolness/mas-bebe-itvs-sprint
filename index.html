@@ -41,7 +41,7 @@ div.thumbnails div {
   display: inline;
 }
 
-div.thumbnails div span {
+div.thumbnails div span.year {
   position: absolute;
   color: white;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -181,12 +181,12 @@ a.project-link:hover {
   background: rgba(0, 0, 0, 0.75);
 }
 
-.titles div span {
+.titles div span.year {
   opacity: 0;
   -moz-transition: opacity 0.5s;
 }
 
-.titles div.active span {
+.titles div.active span.year {
   opacity: 1;
 }
 
@@ -208,39 +208,39 @@ a.project-link:hover {
 <div class="thumbnails">
   <div data-active-during="3-5">
     <img src="timeline_images/1927.jpg">
-    <span>1927</span>
+    <span class="year">1927</span>
   </div>
   <div data-active-during="23-31">
     <img src="timeline_images/1941.jpg">
-    <span>1941</span>
+    <span class="year">1941</span>
   </div>
   <div data-active-during="32-40">
     <img src="timeline_images/1945.jpg">
-    <span>1945</span>
+    <span class="year">1945</span>
   </div>
   <div data-active-during="41-49">
     <img src="timeline_images/1965.jpg">
-    <span>1965</span>
+    <span class="year">1965</span>
   </div>
   <div data-active-during="64-73">
     <img src="timeline_images/1968.jpg">
-    <span>1968</span>
+    <span class="year">1968</span>
   </div>
   <div data-active-during="74-92">
     <img src="timeline_images/1973.jpg">
-    <span>1973</span>
+    <span class="year">1973</span>
   </div>
   <div data-active-during="146-155">
     <img src="timeline_images/1980.jpg">
-    <span>1980</span>
+    <span class="year">1980</span>
   </div>
   <div data-active-during="180-188">
     <img src="timeline_images/1994.jpg">
-    <span>1994</span>
+    <span class="year">1994</span>
   </div>
   <div data-active-during="193-206">
     <img src="timeline_images/2011.jpg">
-    <span>today</span>
+    <span class="year">today</span>
   </div>
 </div>
 <ul class="additional-media">
@@ -287,8 +287,8 @@ a.project-link:hover {
 <script src="cornish.js"></script>
 <script>
 $(".thumbnails div").clone().appendTo(".titles");
-$(".titles div").children().not("span").remove();
-$(".titles span").addClass('ribbon');
+$(".titles div").children().not(".year").remove();
+$(".titles .year").addClass('ribbon');
 
 $(window).ready(function() {
   var video = $(".primary-sync-source")[0];
