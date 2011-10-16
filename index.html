@@ -13,6 +13,9 @@ html, body {
 }
 
 .primary-sync-source {
+  position: absolute;
+  top: 0px;
+  left: 0px;
   width: 100%;
 }
 
@@ -195,10 +198,16 @@ a.project-link:hover {
 .pause-indicator .instructions {
   font-size: 10px;
 }
+
+.content {
+  position: relative;
+  margin: 0 auto;
+}
 </style>
-<video
- src="http://labs.toolness.com/temp/mas-bebe/masbebes-854x480.webm"
- autoplay class="primary-sync-source"></video>
+<div class="content">
+  <video
+   src="http://labs.toolness.com/temp/mas-bebe/masbebes-854x480.webm"
+   autoplay class="primary-sync-source"></video>
 <a class="project-link" href="http://laprensa-sandiego.org/featured/%C2%BFmas-bebes-documentary-on-sterilization-of-hispanic-women-2/">¿Más Bebés?</a>
 <div class="lightbox-overlay" style="display: none">
   <div class="lightbox-window">
@@ -284,10 +293,12 @@ a.project-link:hover {
   <div class="instructions">Click to continue playback.</div>
 </div>
 <div class="titles"></div>
+</div>
 <script src="popcorn-complete.min.js"></script>
 <script src="jquery.min.js"></script>
 <script src="instapoppin.js"></script>
 <script src="instapoppin.jquery.js"></script>
+<script src="constrain-aspect.jquery.js"></script>
 <script>
 // We want the year to show up in the frame as well as
 // the timeline thumbnails. To avoid repeating ourselves in
@@ -298,7 +309,11 @@ $(".titles .year").addClass('ribbon');
 
 $(window).ready(function() {
   var video = $(".primary-sync-source")[0];
-  
+
+  // Always make sure our movie frame and the web content inside it
+  // are widescreen.
+  $(".content").constrainAspect(16, 9);
+
   // Clicking on the video should toggle pause/play.
   $(video).click(function() {
     if (video.paused) {
