@@ -1,26 +1,25 @@
 (function(jQuery) {
   jQuery.fn.extend({
-    constrainAspect: function(nativeWidth, nativeHeight) {
+    constrainAspect: function(aWidth, aHeight) {
       var self = this;
+      var idealAspect = aWidth / aHeight;
       
       $(window).resize(function() {
-        var height = $(window).height();
-        var width = $(window).width();
-        var aspect = width / height;
-        var idealAspect = nativeWidth / nativeHeight;
+        var wWidth = $(window).width();
+        var wHeight = $(window).height();
 
-        if (aspect > idealAspect)
+        if (wWidth / wHeight > idealAspect)
           self.css({
             marginTop: 0,
-            width: Math.floor(nativeWidth * (height / nativeHeight)),
-            height: height
+            width: Math.floor(aWidth * (wHeight / aHeight)),
+            height: wHeight
           });
         else {
-          var newHeight = Math.floor(nativeHeight * (width / nativeWidth));
+          var selfHeight = Math.floor(aHeight * (wWidth / aWidth));
           self.css({
-            marginTop: (height - newHeight) / 2,
-            width: width,
-            height: newHeight
+            marginTop: (wHeight - selfHeight) / 2,
+            width: wWidth,
+            height: selfHeight
           });
         }
       });
