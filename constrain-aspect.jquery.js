@@ -11,14 +11,18 @@
 
         if (aspect > idealAspect)
           self.css({
+            marginTop: 0,
             width: Math.floor(nativeWidth * (height / nativeHeight)),
             height: height
           });
-        else
+        else {
+          var newHeight = Math.floor(nativeHeight * (width / nativeWidth));
           self.css({
+            marginTop: (height - newHeight) / 2,
             width: width,
-            height: Math.floor(nativeHeight * (width / nativeWidth))
+            height: newHeight
           });
+        }
       });
       
       $(window).resize();
