@@ -315,8 +315,15 @@ $(window).ready(function() {
   // are widescreen.
   $(".content").constrainAspect(16, 9);
 
+  // Some browsers, most notably Mobile Safari on iOS, don't honor
+  // the autoplay attribute "to prevent unsolicited downloads over
+  // cellular networks at the user's expense", so we need to provide
+  // a UI to start the video.
+  if (!video.autoplay)
+    $(".pause-indicator").show();
+
   // Clicking on the video should toggle pause/play.
-  $(video).click(function() {
+  $(video).mousedown(function() {
     if (video.paused) {
       $(".pause-indicator").hide();
       video.play();
