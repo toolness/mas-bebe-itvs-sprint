@@ -315,11 +315,15 @@ $(window).ready(function() {
   // are widescreen.
   $(".content").constrainAspect(16, 9);
 
-  // Some browsers, most notably Mobile Safari on iOS, don't honor
+  // Some browsers, most notably Mobile Safari on iPad, don't honor
   // the autoplay attribute "to prevent unsolicited downloads over
   // cellular networks at the user's expense", so we need to provide
   // a UI to start the video.
-  if (!video.autoplay)
+  //
+  // Unfortunately, said browsers don't offer a way to detect that
+  // they don't autoplay, so we'll have to resort to user-agent
+  // sniffing.
+  if (navigator.userAgent.match(/iPad/))
     $(".pause-indicator").show();
 
   // Clicking on the video should toggle pause/play.
